@@ -32,13 +32,12 @@ PRICE_KWH = AttributeSchema("price_kilowatt_hour",
                                 is_attribute_required=True,
                                 attribute_description="Provides the price kilowatt hour.")
 
-attr_bookshop = AttributeSchema("bookshop_pos",    Location, False, "The location of the bookshop where you "
-                                                                    "can find the book")
+CHARGER_LOCATION = AttributeSchema("charger_location", Location, True, "The location of the charger ")
 
 JOURNEY_MODEL = DataModel("journey",
                                [PRICE_PER_KM],
                                "All possible scooter data.")
 
 CHARGING_MODEL = DataModel("charging",
-                               [PRICE_KWH, attr_bookshop],
+                               [PRICE_KWH, CHARGER_LOCATION],
                                "All possible chargers data.")

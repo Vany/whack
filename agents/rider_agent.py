@@ -73,8 +73,9 @@ if __name__ == "__main__":
     # query = Query([Constraint(PRICE_PER_KM.name, Eq(1))],
     #               JOURNEY_MODEL
 
-    query = Query([Constraint(PRICE_KWH.name, Lt(56))],
-                  CHARGING_MODEL)
+    # query = Query([Constraint(PRICE_KWH.name, Lt(56))])
+
+    query = Query([Constraint(CHARGER_LOCATION.name, Distance(Location(52.2057092, 0.1183431), 100.0))])
 
     agent.search_services(0, query)
 

@@ -6,7 +6,7 @@ import json
 from agents.scooter_schema import CHARGING_MODEL
 from oef.agents import OEFAgent
 from oef.messages import CFP_TYPES
-from oef.schema import Description
+from oef.schema import Description, Location
 from fetchai.ledger.api import LedgerApi
 from fetchai.ledger.contract import SmartContract
 from fetchai.ledger.crypto import Entity, Address
@@ -18,6 +18,7 @@ class ChargerAgent(OEFAgent):
     charger_description = Description(
         {
             "price_kilowatt_hour": 55,
+            "charger_location": Location(52.2057092, 0.1183431),
         },
         CHARGING_MODEL
     )
