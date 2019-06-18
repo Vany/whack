@@ -20,16 +20,36 @@
 # ------------------------------------------------------------------------------
 import json
 
-from agents.scooter_schema import *
+from scooter_schema import *
 from oef.agents import OEFAgent
 
 from oef.proxy import PROPOSE_TYPES
 from oef.query import *
 from oef.query import Query
-
+from fetchai.ledger.api import LedgerApi
+from fetchai.ledger.contract import SmartContract
+from fetchai.ledger.crypto import Entity, Address
+import binascii
 import time
 
 class RiderAgent(OEFAgent):
+
+    def __init__(self, *args, **kwargs):
+        super(RiderAgent, self).__init__(*args, **kwargs)
+
+        self._entity = Entity()
+        self._address = Address(self._entity)
+
+        with open("./mini_erc20.etch", "r") as fb:
+            self._source = fb.read()
+        self.prepare_contract()
+
+    def prepare_contract(self):
+        self._api = LedgerApi('127.0.0.1', 8000)
+        self._api.sync(self._api.tokens.wealth(self._entity, 5000000))
+        self._contract = SmartContract(self._source)
+        self._api.sync(self._api.contracts.create(self._entity, self._contract, 2456766))
+
     def on_search_result(self, search_id: int, agents: List[str]):
         """For every agent returned in the service search, send a CFP to obtain resources from them."""
         if len(agents) == 0:
@@ -58,8 +78,16 @@ class RiderAgent(OEFAgent):
 
         # PLACE HOLDER TO SIGN AND SUBMIT TRANSACTION
         transaction = json.loads(content.decode("utf-8"))
+        charge_station_address = Address(binascii.unhexlify(transaction['address']))
+
         print("[{0}]: Received contract from {1}".format(self.public_key, origin))
-        print("READY TO SUBMIT: ", transaction)
+        print("READY TO SUBMIT to address: ", charge_station_address, " value: ", transaction['value'])
+
+        self._api.sync(self._contract.action(self._api, 'transfer', 40, [self._entity], self._address, charge_station_address, transaction['value']))
+
+        time.sleep(10)
+
+        print(self._contract.query(self._api, 'balanceOf', owner=charge_station_address))
 
         self.stop()
 
