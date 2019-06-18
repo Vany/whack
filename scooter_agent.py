@@ -35,7 +35,7 @@ class ScooterAgent(OEFAgent):
 
     scooter_description = Description(
         {
-            "price_per_km": True,
+            "price_per_km": 5,
         },
         JOURNEY_MODEL
     )

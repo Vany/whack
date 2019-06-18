@@ -19,7 +19,7 @@ class ChargerAgent(OEFAgent):
 
     charger_description = Description(
         {
-            "price_per_km": True,
+            "price_per_km": 1,
         },
         JOURNEY_MODEL
     )

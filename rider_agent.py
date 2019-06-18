@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
     time.sleep(2)
 
-    query = Query([Constraint(PRICE_PER_KM.name, Eq(True))],
+    query = Query([Constraint(PRICE_PER_KM.name, Eq(1))],
                   JOURNEY_MODEL)
 
     agent.search_services(0, query)
