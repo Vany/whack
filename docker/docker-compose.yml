@@ -1,0 +1,10 @@
+version: '2.2'
+  
+services:
+
+  ledger:
+    build: .
+    container_name: ledger
+    ports:
+      - 8000:8000
+    restart: on-failure
