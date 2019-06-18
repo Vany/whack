@@ -22,12 +22,12 @@ import pickle
 import json
 import pprint
 
-from scooter_schema import PRICE_PER_KM, JOURNEY_MODEL
+from scooter_schema import *
 from oef.agents import OEFAgent
 
 from typing import List
 from oef.proxy import PROPOSE_TYPES
-from oef.query import Eq, Constraint
+from oef.query import *
 from oef.query import Query
 
 import asyncio
@@ -74,8 +74,11 @@ if __name__ == "__main__":
 
     time.sleep(2)
 
-    query = Query([Constraint(PRICE_PER_KM.name, Eq(1))],
-                  JOURNEY_MODEL)
+    # query = Query([Constraint(PRICE_PER_KM.name, Eq(1))],
+    #               JOURNEY_MODEL
+
+    query = Query([Constraint(PRICE_KWH.name, Lt(56))],
+                  CHARGING_MODEL)
 
     agent.search_services(0, query)
 
