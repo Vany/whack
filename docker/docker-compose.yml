@@ -25,7 +25,22 @@ services:
     build: sdk
     container_name: hello_world
     volumes:
-      - ../hello_world:/hello_world
+      - ./hello_world:/hello_world
     working_dir: /hello_world
     command: python3 submit_contract.py hello_world.etch
 
+  example_scooter:
+    build: sdk
+    container_name: example_scooter
+    volumes:
+      - ./oef_scooter:/oef_scooter
+    working_dir: /oef_scooter
+    command: python3 scooter_agent.py
+
+  example_rider:
+    build: sdk
+    container_name: example_rider
+    volumes:
+      - ./oef_scooter:/oef_scooter
+    working_dir: /oef_scooter
+    command: python3 rider_agent.py
