@@ -80,6 +80,10 @@ class ChargerAgent(OEFAgent):
         print("[{0}]: Sending contract to {1}".format(self.public_key, origin))
         self.send_message(0, dialogue_id, origin, encoded_data)
 
+    def on_decline(self, msg_id: int, dialogue_id: int, origin: str, target: int):
+        """Once we received an Decline, send the requested data."""
+        print("[{0}]: Received decline from {1}."
+              .format(self.public_key, origin))
 
 if __name__ == "__main__":
     agent = ChargerAgent(sys.argv[4], oef_addr="search", oef_port=10000)
