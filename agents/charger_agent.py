@@ -15,10 +15,12 @@ from fetchai.ledger.crypto import Entity, Address
 class ChargerAgent(OEFAgent):
     """Class that implements the behaviour of the charger agent."""
 
+    price_kwh = 55
+    location = Location(52.2057092, 0.1183431)
     charger_description = Description(
         {
-            "price_kilowatt_hour": 55,
-            "charger_location": Location(52.2057092, 0.1183431),
+            "price_kilowatt_hour": price_kwh,
+            "charger_location": location,
             "charger_available": True,
         },
         CHARGING_MODEL
@@ -52,11 +54,9 @@ class ChargerAgent(OEFAgent):
         """Send a simple Propose to the sender of the CFP."""
         print("[{0}]: Received CFP from {1}".format(self.public_key, origin))
 
-        price = 1
-
         # prepare the proposal with a given price.
-        proposal = Description({"price_per_km": price})
-        print("[{}]: Sending propose at price: {}".format(self.public_key, price))
+        proposal = Description({"price_kilowatt_hour": self.price_kwh, "charger_location": self.location})
+        print("[{}]: Sending propose at price: {} location {},{}".format(self.public_key, self.price_kwh, self.location.latitude, self.location.longitude))
         self.send_propose(msg_id + 1, dialogue_id, origin, target + 1, [proposal])
 
     def on_accept(self, msg_id: int, dialogue_id: int, origin: str, target: int):
