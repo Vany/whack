@@ -3,3 +3,5 @@ ledger-api-py
 node
 agents/__pycache__/
 oef-sdk-python
+.idea
+.DS_Store
