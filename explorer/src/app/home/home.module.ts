@@ -5,12 +5,14 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    LeafletModule.forRoot(),
     RouterModule.forChild([
       {
         path: '',
