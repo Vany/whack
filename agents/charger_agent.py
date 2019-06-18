@@ -11,12 +11,15 @@ from fetchai.ledger.api import LedgerApi
 from fetchai.ledger.contract import SmartContract
 from fetchai.ledger.crypto import Entity, Address
 import binascii
+import sys
 
 class ChargerAgent(OEFAgent):
     """Class that implements the behaviour of the charger agent."""
 
-    price_kwh = 55
-    location = Location(52.2057092, 0.1183431)
+    print("\n".join(sys.argv))
+
+    price_kwh = int(sys.argv[1]) #55
+    location = Location(float(sys.argv[2]), float(sys.argv[3])) #52.2057092, 0.1183431)
     charger_description = Description(
         {
             "price_kilowatt_hour": price_kwh,
