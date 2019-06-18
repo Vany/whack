@@ -42,6 +42,7 @@ class RiderAgent(OEFAgent):
             print("[{0}]: Sending to agent {1}".format(self.public_key, agent))
             # we send a 'None' query, meaning "give me all the resources you can propose."
             query = None
+            # CFP is Call For Proposal
             self.send_cfp(1, 0, agent, 0, query)
 
     def on_propose(self, msg_id: int, dialogue_id: int, origin: str, target: int, proposals: PROPOSE_TYPES):
@@ -73,9 +74,9 @@ if __name__ == "__main__":
     # query = Query([Constraint(PRICE_PER_KM.name, Eq(1))],
     #               JOURNEY_MODEL
 
-    # query = Query([Constraint(PRICE_KWH.name, Lt(56))])
+    query = Query([Constraint(PRICE_KWH.name, Lt(56)), Constraint(CHARGER_AVAILABLE.name, Eq(True))])
 
-    query = Query([Constraint(CHARGER_LOCATION.name, Distance(Location(52.2057092, 0.1183431), 100.0))])
+    # query = Query([Constraint(CHARGER_LOCATION.name, Distance(Location(52.2057092, 0.1183431), 100.0))])
 
     agent.search_services(0, query)
 
