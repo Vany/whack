@@ -8,3 +8,13 @@ services:
     ports:
       - 8000:8000
     restart: on-failure
+  search:
+    image: fetchai/oef-search
+    volumes:
+      - ./node_config.json:/config/node_config.json
+    ports:
+      - 20000:20000
+      - 10000:10000
+      - 40000:40000
+      - 7500:7500
+    command: node no_sh --config_file /config/node_config.json
