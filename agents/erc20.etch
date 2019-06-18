@@ -1,0 +1,27 @@
+@init
+function createSupply(owner: Address)
+  var ttal : UInt64 = 1000u64;
+  var supply_state = State<UInt64>(owner);
+  supply_state.set(ttal);
+endfunction
+
+@action
+function transfer(from: Address, to: Address, amount: UInt64)
+  var from_account = State<UInt64>(from);
+  var to_account = State<UInt64>(to);
+  if (from_account.get(0u64) >= amount)
+    from_account.set(from_account.get(0u64) - amount);
+    to_account.set(to_account.get(0u64) + amount);
+  endif
+endfunction
+
+@query
+function total(owner: Address) : UInt64
+    var supply_state = State<UInt64>(owner);
+    return supply_state.get(0u64);
+endfunction
+
+@action
+function TEST() : String
+    return "test passed";
+endfunction
