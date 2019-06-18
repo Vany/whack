@@ -3,11 +3,12 @@ version: '2.2'
 services:
 
   ledger:
-    build: .
+    build: ledger
     container_name: ledger
     ports:
       - 8000:8000
     restart: on-failure
+
   search:
     image: fetchai/oef-search
     volumes:
@@ -18,3 +19,13 @@ services:
       - 40000:40000
       - 7500:7500
     command: node no_sh --config_file /config/node_config.json
+    restart: on-failure
+
+  hello_world:
+    build: sdk
+    container_name: hello_world
+    volumes:
+      - ../hello_world:/hello_world
+    working_dir: /hello_world
+    command: python3 submit_contract.py hello_world.etch
+
