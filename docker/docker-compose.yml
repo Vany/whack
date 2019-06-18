@@ -3,11 +3,12 @@ version: '2.2'
 services:
 
   ledger:
-    build: ledger
+    image: fetchai/constellation:0.4.1-rc5
     container_name: ledger
     ports:
       - 8000:8000
     restart: on-failure
+    command: -standalone -port 8000 -block-interval 3000
 
   search:
     image: fetchai/oef-search
