@@ -18,19 +18,15 @@
 #   limitations under the License.
 #
 # ------------------------------------------------------------------------------
-import pickle
 import json
-import pprint
 
-from scooter_schema import *
+from agents.scooter_schema import *
 from oef.agents import OEFAgent
 
-from typing import List
 from oef.proxy import PROPOSE_TYPES
 from oef.query import *
 from oef.query import Query
 
-import asyncio
 import time
 
 class RiderAgent(OEFAgent):

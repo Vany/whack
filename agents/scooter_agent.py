@@ -18,11 +18,9 @@
 #   limitations under the License.
 #
 # ------------------------------------------------------------------------------
-import pickle
 import json
-import pprint
 
-from scooter_schema import JOURNEY_MODEL
+from agents.scooter_schema import JOURNEY_MODEL
 from oef.agents import OEFAgent
 from oef.messages import CFP_TYPES
 from oef.schema import Description

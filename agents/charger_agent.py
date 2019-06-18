@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import pickle
 import json
-import pprint
 
-from scooter_schema import JOURNEY_MODEL, CHARGING_MODEL
+from agents.scooter_schema import CHARGING_MODEL
 from oef.agents import OEFAgent
 from oef.messages import CFP_TYPES
 from oef.schema import Description
