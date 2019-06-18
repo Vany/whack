@@ -1,0 +1,4 @@
+function main()
+    printLn("Hello world!");
+endfunction
+
