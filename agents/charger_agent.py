@@ -19,6 +19,7 @@ class ChargerAgent(OEFAgent):
         {
             "price_kilowatt_hour": 55,
             "charger_location": Location(52.2057092, 0.1183431),
+            "charger_available": True,
         },
         CHARGING_MODEL
     )
