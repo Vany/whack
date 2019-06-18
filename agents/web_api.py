@@ -8,6 +8,8 @@ import sys
 import time
 import json
 
+from oef.agents import OEFAgent
+from oef.proxy import PROPOSE_TYPES
 from oef.query import *
 
 from agents.rider_agent import RiderAgent
@@ -21,9 +23,39 @@ contracts = {}
 
 loop = asyncio.get_event_loop()
 
-
 # Need funds to deploy contract
 # print(dir(api.tokens))
+
+class ApiAgent(OEFAgent):
+    chargerList = List[Description]
+
+    @property
+    def chargers(self) -> List[Description]:
+        return self.chargerList
+
+    def on_search_result(self, search_id: int, agents: List[str]):
+        """For every agent returned in the service search, send a CFP to obtain resources from them."""
+        if len(agents) == 0:
+            print("[{}]: No agent found. Stopping...".format(self.public_key))
+            self.stop()
+            return
+
+        print("[{0}]: Agent found: {1}".format(self.public_key, agents))
+        for agent in agents:
+            print("[{0}]: Sending to agent {1}".format(self.public_key, agent))
+            # CFP is Call For Proposal
+            self.send_cfp(1, 0, agent, 0, None)
+
+    def on_propose(self, msg_id: int, dialogue_id: int, origin: str, target: int, proposals: PROPOSE_TYPES):
+        """When we receive a Propose message, answer with an Accept."""
+        print("[{0}]: Received propose from agent {1}".format(self.public_key, origin))
+        self.chargerList = proposals
+        # for i, p in enumerate(proposals):
+        #     print("[{0}]: Proposal {1}: {2}".format(self.public_key, i, p.values))
+
+        # TODO: save proposals to global var
+        print("[{0}]: Decline Propose.".format(self.public_key))
+        self.send_decline(msg_id, dialogue_id, origin, msg_id + 1)
 
 @app.route('/balance')
 def balance():
@@ -44,19 +76,24 @@ def create_tokens():
 
 @app.route('/chargers')
 def chargers():
-    agent = RiderAgent("RiderAgent", oef_addr="127.0.0.1", oef_port=10000, loop=loop)
+    agent = ApiAgent("ApiAgent", oef_addr="127.0.0.1", oef_port=10000, loop=loop)
 
     agent.connect()
-    time.sleep(2)
+    time.sleep(1)
 
     query = Query([Constraint(CHARGER_AVAILABLE.name, Eq(True))])
     agent.search_services(0, query)
 
     time.sleep(1)
     try:
-        agent.async_run()
-        time.sleep(3)
-        return json.dumps({"chargers": 1})
+        agent.run()
+        time.sleep(2)
+        # for i, p in enumerate(agent.chargerList):
+        #     print("Charger {}: {}".format(i, p.values))
+
+        agent.stop()
+        agent.disconnect()
+        return json.dumps({"chargers": "len(agent.chargers)"})
     except Exception as ex:
         return json.dumps({"exception": ex})
     finally:
