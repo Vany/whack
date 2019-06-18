@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import pickle
 import json
-import pprint
 
-from scooter_schema import JOURNEY_MODEL
+from agents.scooter_schema import CHARGING_MODEL
 from oef.agents import OEFAgent
 from oef.messages import CFP_TYPES
 from oef.schema import Description
@@ -19,9 +17,9 @@ class ChargerAgent(OEFAgent):
 
     charger_description = Description(
         {
-            "price_per_km": 1,
+            "price_kilowatt_hour": 55,
         },
-        JOURNEY_MODEL
+        CHARGING_MODEL
     )
 
     def __init__(self, *args, **kwargs):
