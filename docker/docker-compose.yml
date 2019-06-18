@@ -30,18 +30,43 @@ services:
     working_dir: /hello_world
     command: python3 submit_contract.py hello_world.etch
 
-  example_scooter:
+  charger_1:
     build: sdk
-    container_name: example_scooter
+    container_name: charger_1
     volumes:
-      - ./oef_scooter:/oef_scooter
-    working_dir: /oef_scooter
-    command: python3 scooter_agent.py
+      - ../agents:/agents
+    working_dir: /agents
+    command: python3 charger_agent.py 34 56.21 -9.3 charger1
 
-  example_rider:
+  charger_2:
     build: sdk
-    container_name: example_rider
+    container_name: charger_2
     volumes:
-      - ./oef_scooter:/oef_scooter
-    working_dir: /oef_scooter
-    command: python3 rider_agent.py
+      - ../agents:/agents
+    working_dir: /agents
+    command: python3 charger_agent.py 33 57.1 -10.3 charger2
+
+  charger_3:
+    build: sdk
+    container_name: charger_3
+    volumes:
+      - ../agents:/agents
+    working_dir: /agents
+    command: python3 charger_agent.py 33 52.55 -9.81 charger3
+
+  charger_4:
+    build: sdk
+    container_name: charger_4
+    volumes:
+      - ../agents:/agents
+    working_dir: /agents
+    command: python3 charger_agent.py 35 55.05 -8.99 charger4
+
+  charger_5:
+    build: sdk
+    container_name: charger_5
+    volumes:
+      - ../agents:/agents
+    working_dir: /agents
+    command: python3 charger_agent.py 36 55.29 -9.35 charger5
+

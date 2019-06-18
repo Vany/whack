@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-
 from scooter_schema import CHARGING_MODEL
 from oef.agents import OEFAgent
 from oef.messages import CFP_TYPES
@@ -35,10 +34,10 @@ class ChargerAgent(OEFAgent):
         self._entity = Entity()
         self._address = Address(self._entity)
 
-        print(self._address)
-        h = self._address.to_hex()
-        print(h)
-        print(Address(binascii.unhexlify(h)))
+        #print(self._address)
+        #h = self._address.to_hex()
+        #print(h)
+        #print(Address(binascii.unhexlify(h)))
 
     #      with open("./full_contract.etch", "r") as fb:
     #          self._source = fb.read()
@@ -47,7 +46,7 @@ class ChargerAgent(OEFAgent):
 
     def prepare_contract(self):
         # Setting API up
-        self._api = LedgerApi('127.0.0.1', 8000)
+        self._api = LedgerApi('ledger', 8000)
 
         # Need funds to deploy contract
         self._api.sync(self._api.tokens.wealth(self._entity, 5000000))
@@ -83,7 +82,7 @@ class ChargerAgent(OEFAgent):
 
 
 if __name__ == "__main__":
-    agent = ChargerAgent("charger", oef_addr="127.0.0.1", oef_port=10000)
+    agent = ChargerAgent(sys.argv[4], oef_addr="search", oef_port=10000)
     agent.connect()
     agent.register_service(77, agent.charger_description)
 
