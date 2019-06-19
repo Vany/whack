@@ -19,12 +19,13 @@ class ChargerAgent(OEFAgent):
 
     price_kwh = int(sys.argv[1]) #55
     location = Location(float(sys.argv[2]), float(sys.argv[3])) #52.2057092, 0.1183431)
+    bonus = int(sys.argv[6])
     charger_description = Description(
         {
             "price_kilowatt_hour": price_kwh,
             "charger_location": location,
             "charger_available": True,
-            "charger_bonus": int(sys.argv[6]),
+            "charger_bonus": bonus,
         },
         CHARGING_MODEL
     )
@@ -63,7 +64,7 @@ class ChargerAgent(OEFAgent):
         print("[{0}]: Received CFP from {1}".format(self.public_key, origin))
 
         # prepare the proposal with a given price.
-        proposal = Description({"price_kilowatt_hour": self.price_kwh, "charger_location": self.location})
+        proposal = Description({"price_kilowatt_hour": self.price_kwh, "charger_location": self.location, 'charger_bonus': self.bonus})
         print("[{}]: Sending propose at price: {} location {},{}".format(self.public_key, self.price_kwh, self.location.latitude, self.location.longitude))
         self.send_propose(msg_id + 1, dialogue_id, origin, target + 1, [proposal])
 
