@@ -1,4 +1,5 @@
 import asyncio
+from typing import Dict
 
 from flask import Flask
 from fetchai.ledger.api import LedgerApi
@@ -27,7 +28,7 @@ loop = asyncio.get_event_loop()
 # print(dir(api.tokens))
 
 class ApiAgent(OEFAgent):
-    chargerList = List[Description]
+    chargerList = Dict[str, ATTRIBUTE_TYPES]
 
     @property
     def chargers(self) -> List[Description]:
