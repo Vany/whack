@@ -24,7 +24,7 @@ class ChargerAgent(OEFAgent):
             "price_kilowatt_hour": price_kwh,
             "charger_location": location,
             "charger_available": True,
-            "charger_bonus": 10,
+            "charger_bonus": sys.argv[6],
         },
         CHARGING_MODEL
     )
@@ -32,7 +32,7 @@ class ChargerAgent(OEFAgent):
     def __init__(self, *args, **kwargs):
         super(ChargerAgent, self).__init__(*args, **kwargs)
 
-        self._entity = Entity()
+        self._entity = Entity.from_hex(sys.argv[5])
         self._address = Address(self._entity)
 
         #print(self._address)
