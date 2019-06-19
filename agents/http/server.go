@@ -15,6 +15,7 @@ var data_cache []byte
 var command = "../api_agent.py"
 
 func MHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(data_cache)
 }
 
