@@ -25,7 +25,7 @@ export class HomePage {
 
 
     this.chargerService.getChargers().subscribe(data => {
-      const chargers = this.chargerService.parceData(data);
+      this.showChargers(this.chargerService.parceData(data));
     });
 
     // this.showChargers(this.chargerService.parceData());
@@ -47,7 +47,7 @@ export class HomePage {
         })
       });
 
-      m.bindPopup('<ion-button size="small" >charge price ' + charger.price + '</ion-button>');
+      m.bindPopup('<ion-button size="small" >' + charger.name +  ' price ' + charger.price + '</ion-button>');
       this.layers.push(m);
     });
   }

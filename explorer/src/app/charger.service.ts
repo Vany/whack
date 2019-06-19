@@ -24,7 +24,7 @@ export class ChargerService {
       }));
   }
 
-  parceData(data: any[]): Charger[] {
+  parceData(data: any): Charger[] {
     // console.log(data);
 
     let result: Charger[] = [];
@@ -42,7 +42,7 @@ export class ChargerService {
     //   { name: 'charter2', price: 100, latitude: 52.521008, longitude: 13.404954}
     // ];
 
-    console.log(result)
+    console.log(result);
     return result;
   }
 
