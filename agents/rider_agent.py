@@ -54,13 +54,13 @@ class RiderAgent(OEFAgent):
     def on_search_result(self, search_id: int, agents: List[str]):
         """For every agent returned in the service search, send a CFP to obtain resources from them."""
         if len(agents) == 0:
-            print("[{}]: No agent found. Stopping...".format(self.public_key))
+            print("[{0}]: No agent found. Stopping...".format(self.public_key))
             self.stop()
             return
 
-        print("[{0}]: Agent found: {1}".format(self.public_key, agents))
+        print("Agent found: {0}".format(agents))
         for agent in agents:
-            print("[{0}]: Sending to agent {1}".format(self.public_key, agent))
+            print("Sending to agent {0}".format(agent))
             # we send a 'None' query, meaning "give me all the resources you can propose."
             query = None
             # CFP is Call For Proposal
@@ -68,10 +68,13 @@ class RiderAgent(OEFAgent):
 
     def on_propose(self, msg_id: int, dialogue_id: int, origin: str, target: int, proposals: PROPOSE_TYPES):
         """When we receive a Propose message, answer with an Accept."""
-        print("[{0}]: Received propose from agent {1}".format(self.public_key, origin))
+        print("Received propose from agent {0}".format(origin))
         for i, p in enumerate(proposals):
-            print("[{0}]: Proposal {1}: {2}".format(self.public_key, i, p.values))
-        print("[{0}]: Accepting Propose.".format(self.public_key))
+            print("Proposal {0}: {1}".format(i, {
+                'price_kilowatt_hour': p.values['price_kilowatt_hour'],
+                'charger_bonus': p.values['charger_bonus']
+                }))
+        #print("[{0}]: Accepting Propose.".format(self.public_key))
         self.send_accept(msg_id, dialogue_id, origin, msg_id + 1)
 
     def on_message(self, msg_id: int, dialogue_id: int, origin: str, content: bytes):
@@ -81,8 +84,8 @@ class RiderAgent(OEFAgent):
         transaction = json.loads(content.decode("utf-8"))
         charge_station_address = Address(binascii.unhexlify(transaction['address']))
 
-        print("[{0}]: Received contract from {1}".format(self.public_key, origin))
-        print("READY TO SUBMIT to address: ", charge_station_address, " value: ", transaction['value'])
+        print("Received contract from {0}".format(origin))
+        print("READY TO SUBMIT:", origin, "(", charge_station_address, ") price:", transaction['value'], "bonus:", transaction['bonus'])
 
         #self._api.sync(self._contract.action(self._api, 'transfer', 40, [self._entity], self._address, charge_station_address, transaction['value']))
         self._api.sync(self._api.contracts.action(contract_addr, contract_owner, 'transfer', 40, [self._entity], self._address, charge_station_address, transaction['value']))
