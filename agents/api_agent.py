@@ -9,7 +9,7 @@ from agents.scooter_schema import *
 
 
 class ApiAgent(OEFAgent):
-    chargerList = List[Description]
+    chargerList: List[Description]
 
     @property
     def chargers(self) -> List[Description]:
@@ -31,9 +31,9 @@ class ApiAgent(OEFAgent):
     def on_propose(self, msg_id: int, dialogue_id: int, origin: str, target: int, proposals: PROPOSE_TYPES):
         """When we receive a Propose message, answer with an Accept."""
         print("[{0}]: Received propose from agent {1}".format(self.public_key, origin))
-        self.chargerList = proposals
-        # for i, p in enumerate(proposals):
-        #     print("[{0}]: Proposal {1}: {2}".format(self.public_key, i, p.values))
+        for i, p in enumerate(proposals):
+            print("[{0}]: Proposal {1}: {2}".format(self.public_key, i, p.values))
+            self.chargerList.append(p)
 
         # TODO: save proposals to global var
         print("[{0}]: Decline Propose.".format(self.public_key))
