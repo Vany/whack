@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {icon, latLng, marker, tileLayer} from 'leaflet';
+import {ChargerService, Charger} from '../charger.service';
 
 @Component({
   selector: 'app-home',
@@ -18,45 +19,42 @@ export class HomePage {
 
   };
 
-  constructor() {}
+  constructor(private chargerService: ChargerService) {}
 
   ngOnInit() {
-    const m = marker([52.520008, 13.404954], {
-      title: 'charger_1',
-      alt: 'charger_1',
-      clickable: true,
-      riseOnHover: true,
-      icon: icon({
-        iconSize: [ 25, 41 ],
-        iconAnchor: [ 13, 41 ],
-        iconUrl: 'assets/marker-icon.png',
-        shadowUrl: 'assets/marker-shadow.png'
-      })
+
+
+    this.chargerService.getChargers().subscribe(data => {
+      const chargers = this.chargerService.parceData(data);
     });
 
-    this.layers.push(m);
+    this.showChargers(this.chargerService.parceData(''));
+
+  }
+
+  showChargers(chargers: Charger[]) {
+    chargers.map((charger) => {
+      const m = marker([charger.latitude, charger.longitude], {
+        title: charger.name,
+        alt: charger.name,
+        clickable: true,
+        riseOnHover: true,
+        icon: icon({
+          iconSize: [ 25, 41 ],
+          iconAnchor: [ 13, 41 ],
+          iconUrl: 'assets/marker-icon.png',
+          shadowUrl: 'assets/marker-shadow.png'
+        })
+      });
+
+      m.bindPopup('<ion-button size="small" >charge price ' + charger.price + '</ion-button>');
+      this.layers.push(m);
+    });
   }
 
   click(event) {
     console.log(event);
 
-    const m = marker([52.530108, 13.404954], {
-      title: 'charger_2',
-      alt: 'charger_2',
-      clickable: true,
-      riseOnHover: true,
-      icon: icon({
-        iconSize: [ 25, 41 ],
-        iconAnchor: [ 13, 41 ],
-        iconUrl: 'assets/marker-icon.png',
-        shadowUrl: 'assets/marker-shadow.png'
-      })
-    });
-
-    // m.bindPopup('<ion-button size="small" >charge</ion-button>');
-
-
-    this.layers.push(m);
   }
 
 
