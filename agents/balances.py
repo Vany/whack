@@ -19,10 +19,10 @@ riders = ['WfQDBasLx396CCxWvUoa4BmEsStPNRUi9iA45zu6k3eeaUMGs',
         '2GNnBTmnkUwDeJfuig3hxN77gteXixw45mhita58MzZyMoqQ9u',
         'fzoGmzeHN3EkvtbgTNYxuP1Zokpn7AZy5eiSSdP9Rw7KwitPW',
         '2R6SJK7hoiVTQbMVQDMpB86NaHX9CAXBb5hmH5kyTHCndsNSfe']
-cnt = 0
+cnt = 1
 for rider in riders:
-    print('rider', cnt, "| balance: ", api.contracts.query(chrg_contract_address, contract_owner_address,
-        'balanceOf', owner=Address(rider))[1]['result'], " | bonus balance: ", api.contracts.query(cbns_contract_address,
+    print('rider', cnt, "\t balance: ", api.contracts.query(chrg_contract_address, contract_owner_address,
+        'balanceOf', owner=Address(rider))[1]['result'], "\t bonus balance: ", api.contracts.query(cbns_contract_address,
             contract_owner_address, 'balanceOf', owner=Address(rider))[1]['result'])
     cnt = cnt + 1
 
@@ -31,8 +31,8 @@ chargers = ['Do2W1zBm4VSsVhqtP48TDRZf35Sfjy8guMpqFwJYpDW4Y6U1E',
     '2aZcFnGahqPMrpr6DmEq7LmDcQS9xHgTHdFGHs2MgRYZaqsvyX',
     '26GfX7AUUik6cxPrzskyHsNMpmRjAqmUQutydwsZTMhZcMUgzu',
     '2oZixVsU7fRpH83qoLxXstpfDFXjkjZWucsXXQVbmrQ8A7GxN'];
-cnt = 0
+cnt = 1
 for charger in chargers:
-    print('charger', cnt, "| balance: ", api.contracts.query(chrg_contract_address, contract_owner_address,
+    print('charger', cnt, "\t balance: ", api.contracts.query(chrg_contract_address, contract_owner_address,
         'balanceOf', owner=Address(charger))[1]['result'])
     cnt = cnt + 1
