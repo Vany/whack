@@ -110,7 +110,10 @@ if __name__ == "__main__":
     # query = Query([Constraint(PRICE_PER_KM.name, Eq(1))],
     #               JOURNEY_MODEL
 
-    query = Query([Constraint(PRICE_KWH.name, Lt(56)), Constraint(CHARGER_AVAILABLE.name, Eq(True))])
+    query = Query([Constraint(PRICE_KWH.name, Lt(56)),
+                   Constraint(CHARGER_AVAILABLE.name, Eq(True)),
+                   Constraint(CHARGER_BONUS.name, Gt(0))
+                   ])
 
     # query = Query([Constraint(CHARGER_LOCATION.name, Distance(Location(52.2057092, 0.1183431), 100.0))])
 

@@ -1,34 +1,15 @@
-import asyncio
-from typing import Dict
-
-from flask import Flask
-from fetchai.ledger.api import LedgerApi
-from fetchai.ledger.contract import SmartContract
-from fetchai.ledger.crypto import Entity, Address
-import sys
 import time
-import json
 
 from oef.agents import OEFAgent
-from oef.proxy import PROPOSE_TYPES
+from oef.messages import PROPOSE_TYPES
 from oef.query import *
+from oef.schema import Description
 
-from agents.rider_agent import RiderAgent
 from agents.scooter_schema import *
 
-app            = Flask(__name__)
-wallet_owner   = Entity()
-wallet_address = Address(wallet_owner)
-api = LedgerApi('127.0.0.1', 8100)
-contracts = {}
-
-loop = asyncio.get_event_loop()
-
-# Need funds to deploy contract
-# print(dir(api.tokens))
 
 class ApiAgent(OEFAgent):
-    chargerList = Dict[str, ATTRIBUTE_TYPES]
+    chargerList = List[Description]
 
     @property
     def chargers(self) -> List[Description]:
@@ -58,54 +39,32 @@ class ApiAgent(OEFAgent):
         print("[{0}]: Decline Propose.".format(self.public_key))
         self.send_decline(msg_id, dialogue_id, origin, msg_id + 1)
 
-@app.route('/balance')
-def balance():
-    balance =  api.tokens.balance(wallet_address)
-    return json.dumps({"address": str(wallet_address), "balance":balance})
 
-
-@app.route('/address')
-def address():
-    return json.dumps({"address", str(wallet_address)})
-
-
-@app.route('/create-tokens')
-def create_tokens():
-    """Creates 10k tokens """
-    api.sync(api.tokens.wealth(wallet_owner, 100000))
-    return json.dumps({"status":"done"})
-
-@app.route('/chargers')
-def chargers():
-    agent = ApiAgent("ApiAgent", oef_addr="127.0.0.1", oef_port=10000, loop=loop)
-
+if __name__ == "__main__":
+    # create and connect the agent
+    agent = ApiAgent("ApiAgent", oef_addr="127.0.0.1", oef_port=10000)
     agent.connect()
-    time.sleep(1)
 
-    query = Query([Constraint(CHARGER_AVAILABLE.name, Eq(True))])
+    time.sleep(2)
+
+    # query = Query([Constraint(PRICE_PER_KM.name, Eq(1))],
+    #               JOURNEY_MODEL
+
+    query = Query([Constraint(PRICE_KWH.name, Lt(56)), Constraint(CHARGER_AVAILABLE.name, Eq(True))])
+
+    # query = Query([Constraint(CHARGER_LOCATION.name, Distance(Location(52.2057092, 0.1183431), 100.0))])
+
     agent.search_services(0, query)
 
     time.sleep(1)
     try:
         agent.run()
-        time.sleep(2)
-        # for i, p in enumerate(agent.chargerList):
-        #     print("Charger {}: {}".format(i, p.values))
-
-        agent.stop()
-        agent.disconnect()
-        return json.dumps({"chargers": "len(agent.chargers)"})
+        time.sleep(3)
     except Exception as ex:
-        return json.dumps({"exception": ex})
+        print("EXCEPTION:", ex)
     finally:
         try:
             agent.stop()
             agent.disconnect()
         except:
             pass
-
-
-
-if __name__ == "__main__":
-    app.run(debug=False, use_reloader=False)
-    loop.run_forever()
