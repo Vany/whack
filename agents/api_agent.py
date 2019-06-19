@@ -63,7 +63,7 @@ class ApiAgent(OEFAgent):
 
 if __name__ == "__main__":
     # create and connect the agent
-    agent = ApiAgent("ApiAgent", oef_addr="127.0.0.1", oef_port=10000)
+    agent = ApiAgent("ApiAgent", oef_addr="search", oef_port=10000)
     agent.connect()
 
     time.sleep(2)

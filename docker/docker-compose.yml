@@ -22,6 +22,15 @@ services:
     command: node no_sh --config_file /config/node_config.json
     restart: on-failure
 
+  api:
+    build: api
+    volumes:
+      - ../agents:/agents
+    ports:
+      - 8010:8010
+    working_dir: /agents/http
+    command: go run server.go
+
   charger_1:
     build: sdk
     container_name: charger_1

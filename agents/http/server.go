@@ -10,7 +10,7 @@ import (
 
 
 var last_data = time.Now()
-var cache_time = time.Duration(10 *time.Second)
+var cache_time = time.Duration(1 *time.Minute)
 var data_cache []byte
 var command = "../api_agent.py"
 
