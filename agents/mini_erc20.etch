@@ -1,6 +1,6 @@
 @init
 function createSupply(owner: Address)
-  var ttal : UInt64 = 1000u64;
+  var ttal : UInt64 = 1000000000u64;
   var supply_state = State<UInt64>(owner);
   supply_state.set(ttal);
 endfunction

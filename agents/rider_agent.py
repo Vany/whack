@@ -37,7 +37,12 @@ class RiderAgent(OEFAgent):
     def __init__(self, *args, **kwargs):
         super(RiderAgent, self).__init__(*args, **kwargs)
 
-        self._entity = Entity()
+        self._entity = Entity.from_hex('904f302f980617d5f40219337ef826cdf64992e577676cdd83295f189af82ff4')
+        #print(Address(self._entity))
+        #h = self._entity.private_key_hex
+        #print(h)
+        #print(Address(Entity.from_hex(h)))
+
         self._address = Address(self._entity)
 
         with open("./mini_erc20.etch", "r") as fb:
@@ -47,8 +52,8 @@ class RiderAgent(OEFAgent):
     def prepare_contract(self):
         self._api = LedgerApi('127.0.0.1', 8000)
         self._api.sync(self._api.tokens.wealth(self._entity, 5000000))
-        self._contract = SmartContract(self._source)
-        self._api.sync(self._api.contracts.create(self._entity, self._contract, 2456766))
+        #self._contract = SmartContract(self._source)
+        #self._api.sync(self._api.contracts.create(self._entity, self._contract, 2456766))
 
     def on_search_result(self, search_id: int, agents: List[str]):
         """For every agent returned in the service search, send a CFP to obtain resources from them."""
@@ -83,11 +88,14 @@ class RiderAgent(OEFAgent):
         print("[{0}]: Received contract from {1}".format(self.public_key, origin))
         print("READY TO SUBMIT to address: ", charge_station_address, " value: ", transaction['value'])
 
-        self._api.sync(self._contract.action(self._api, 'transfer', 40, [self._entity], self._address, charge_station_address, transaction['value']))
+        #self._api.sync(self._contract.action(self._api, 'transfer', 40, [self._entity], self._address, charge_station_address, transaction['value']))
+        self._api.sync(self._api.contracts.action(Address('Ch9EPpgfwJWUiHeSWWcxSr29pfWLgZ9RPRU2BT5CKVNEabLJc'), Address('atsREugsanXS828FnTvmLM9vCkBsWnDgushDH9YjEgsdBuRGv'), 'transfer', 40, [self._entity], self._address, charge_station_address, transaction['value']))
 
         time.sleep(10)
 
-        print(self._contract.query(self._api, 'balanceOf', owner=charge_station_address))
+        #print(self._contract.query(self._api, 'balanceOf', owner=charge_station_address))
+        print(self._api.contracts.query(Address('Ch9EPpgfwJWUiHeSWWcxSr29pfWLgZ9RPRU2BT5CKVNEabLJc'), Address('atsREugsanXS828FnTvmLM9vCkBsWnDgushDH9YjEgsdBuRGv'), 'balanceOf', owner=charge_station_address))
+        print(self._api.contracts.query(Address('Ch9EPpgfwJWUiHeSWWcxSr29pfWLgZ9RPRU2BT5CKVNEabLJc'), Address('atsREugsanXS828FnTvmLM9vCkBsWnDgushDH9YjEgsdBuRGv'), 'balanceOf', owner=self._address))
 
         self.stop()
 
