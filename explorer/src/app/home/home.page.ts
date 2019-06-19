@@ -28,7 +28,7 @@ export class HomePage {
       const chargers = this.chargerService.parceData(data);
     });
 
-    this.showChargers(this.chargerService.parceData(''));
+    // this.showChargers(this.chargerService.parceData());
 
   }
 
