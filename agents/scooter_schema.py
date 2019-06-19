@@ -36,5 +36,5 @@ CHARGER_OWNER = AttributeSchema("charger_owner", str, False, "Provides  charger'
 JOURNEY_MODEL = DataModel("journey", [PRICE_PER_KM], "All possible scooter data.")
 
 CHARGING_MODEL = DataModel("charging",
-                               [PRICE_KWH, CHARGER_LOCATION, CHARGER_AVAILABLE, CHARGER_OWNER],
+                               [PRICE_KWH, CHARGER_LOCATION, CHARGER_AVAILABLE, CHARGER_OWNER, CHARGER_BONUS],
                                "All possible chargers data.")

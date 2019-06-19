@@ -24,7 +24,7 @@ class ChargerAgent(OEFAgent):
             "price_kilowatt_hour": price_kwh,
             "charger_location": location,
             "charger_available": True,
-            "charger_bonus": sys.argv[6],
+            "charger_bonus": int(sys.argv[6]),
         },
         CHARGING_MODEL
     )
