@@ -10,25 +10,29 @@ chrg_contract_address = Address('Won2CpQEJHaLRmL1x5sNFvDNFwbM6YLh3qq6H3ME6ngzVCa
 cbns_contract_address = Address('QguxAD9FTj2MTnvNbdr15MGPMftXW8qdcewa4X96JEx2SU6hg')
 
 api = LedgerApi('127.0.0.1', 8000)
-print('owner', contract_owner_address, api.contracts.query(chrg_contract_address,
-    contract_owner_address, 'balanceOf', owner=contract_owner_address),
-    api.contracts.query(cbns_contract_address, contract_owner_address, 'balanceOf', owner=contract_owner_address))
+#print('owner', contract_owner_address, api.contracts.query(chrg_contract_address,
+#    contract_owner_address, 'balanceOf', owner=contract_owner_address),
+#    api.contracts.query(cbns_contract_address, contract_owner_address, 'balanceOf', owner=contract_owner_address))
 
 riders = ['WfQDBasLx396CCxWvUoa4BmEsStPNRUi9iA45zu6k3eeaUMGs',
         'pUkSDemAkhTob8UiqmRoRbjBW2rwTdnDR68thfToZwYrYHdGr',
         '2GNnBTmnkUwDeJfuig3hxN77gteXixw45mhita58MzZyMoqQ9u',
         'fzoGmzeHN3EkvtbgTNYxuP1Zokpn7AZy5eiSSdP9Rw7KwitPW',
         '2R6SJK7hoiVTQbMVQDMpB86NaHX9CAXBb5hmH5kyTHCndsNSfe']
+cnt = 0
 for rider in riders:
-    print('rider', api.contracts.query(chrg_contract_address, contract_owner_address,
-        'balanceOf', owner=Address(rider)), api.contracts.query(cbns_contract_address,
-            contract_owner_address, 'balanceOf', owner=Address(rider)))
+    print('rider', cnt, "| balance: ", api.contracts.query(chrg_contract_address, contract_owner_address,
+        'balanceOf', owner=Address(rider))[1]['result'], " | bonus balance: ", api.contracts.query(cbns_contract_address,
+            contract_owner_address, 'balanceOf', owner=Address(rider))[1]['result'])
+    cnt = cnt + 1
 
 chargers = ['Do2W1zBm4VSsVhqtP48TDRZf35Sfjy8guMpqFwJYpDW4Y6U1E',
     'RWuCaax6jpRCBrDvfk6awXtt5UBTUsaQCZb7wCm9av3NBaPn4',
     '2aZcFnGahqPMrpr6DmEq7LmDcQS9xHgTHdFGHs2MgRYZaqsvyX',
     '26GfX7AUUik6cxPrzskyHsNMpmRjAqmUQutydwsZTMhZcMUgzu',
     '2oZixVsU7fRpH83qoLxXstpfDFXjkjZWucsXXQVbmrQ8A7GxN'];
+cnt = 0
 for charger in chargers:
-    print('charger', api.contracts.query(chrg_contract_address, contract_owner_address,
-        'balanceOf', owner=Address(charger)))
+    print('charger', cnt, "| balance: ", api.contracts.query(chrg_contract_address, contract_owner_address,
+        'balanceOf', owner=Address(charger))[1]['result'])
+    cnt = cnt + 1

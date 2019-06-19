@@ -46,7 +46,7 @@ class RiderAgent(OEFAgent):
                 'dfe06a3baa93ad1d2f248317c601f710821cc1916e09d7c6e261f432563e50f1',
                 'a92e7c9a1c091bb7bc70874da36fdc44a8217577758a061e008344bd402a6118',
                 '672ebe1ef50a3c49532fe2118686d7025048de51e4f77ed8d0880cd52efe80a7']
-        self._entity = Entity.from_hex(riders[int(sys.argv[1])])
+        self._entity = Entity.from_hex(riders[int(sys.argv[1])-1])
         self._address = Address(self._entity)
         self._api = LedgerApi('127.0.0.1', 8000)
         self._api.sync(self._api.tokens.wealth(self._entity, 5000000))
