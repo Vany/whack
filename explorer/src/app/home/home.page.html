@@ -12,7 +12,10 @@
 <ion-content>
   <div style="height: 100vh;"
        leaflet
-       [leafletOptions]="options">
+       [leafletOptions]="options"
+       [leafletLayers]="layers"
+       (leafletClick)="click($event)"
+  >
   </div>
 
 <!--    <ion-card class="welcome-card">-->
