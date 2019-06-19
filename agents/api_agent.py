@@ -50,7 +50,7 @@ class ApiAgent(OEFAgent):
         self.send_decline(msg_id, dialogue_id, origin, msg_id + 1)
         self.current = self.current + 1
         if self.current == self.agentCount:
-            print(self.chargerList)
+            print(json.dumps(self.chargerList))
             self.stop()
 
 

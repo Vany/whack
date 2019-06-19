@@ -1,5 +1,0 @@
-NODEDIR=node
-FETCHAIDIR=ledger
-FETCHAIBUILDDIR=./ledger/build
-
-

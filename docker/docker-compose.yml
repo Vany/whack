@@ -37,7 +37,7 @@ services:
     volumes:
       - ../agents:/agents
     working_dir: /agents
-    command: python3 charger_agent.py 34 56.21 -9.3 charger1 2b68749f61e3f65d46dd9548556be106d46cc89f0a643eb6b88019e1490263fe 10
+    command: python3 charger_agent.py 34 52.4684453 13.4299929 charger1 2b68749f61e3f65d46dd9548556be106d46cc89f0a643eb6b88019e1490263fe 10
 
   charger_2:
     build: sdk
@@ -45,7 +45,7 @@ services:
     volumes:
       - ../agents:/agents
     working_dir: /agents
-    command: python3 charger_agent.py 33 57.1 -10.3 charger2 293d2fc2469343196d8aeb9496cd4626203eaddc111898799fb8402f75c02360 12
+    command: python3 charger_agent.py 33 52.47485330000001 13.4278759 charger2 293d2fc2469343196d8aeb9496cd4626203eaddc111898799fb8402f75c02360 12
 
   charger_3:
     build: sdk
@@ -53,7 +53,7 @@ services:
     volumes:
       - ../agents:/agents
     working_dir: /agents
-    command: python3 charger_agent.py 33 52.55 -9.81 charger3 4f0a08718c81cc92f184403b06f848b9a74608a654e64d624f902d5be77f7c0e 9
+    command: python3 charger_agent.py 33 52.49121969999999 13.3143028 charger3 4f0a08718c81cc92f184403b06f848b9a74608a654e64d624f902d5be77f7c0e 9
 
   charger_4:
     build: sdk
@@ -61,7 +61,7 @@ services:
     volumes:
       - ../agents:/agents
     working_dir: /agents
-    command: python3 charger_agent.py 35 55.05 -8.99 charger4 e01cfb5a6cd69b0cf0b94eca3515f5bb9f2152fa3cf5cb9379599a9bd00de9f7 11
+    command: python3 charger_agent.py 35 52.5554 13.5667 charger4 e01cfb5a6cd69b0cf0b94eca3515f5bb9f2152fa3cf5cb9379599a9bd00de9f7 11
 
   charger_5:
     build: sdk
@@ -69,5 +69,5 @@ services:
     volumes:
       - ../agents:/agents
     working_dir: /agents
-    command: python3 charger_agent.py 36 55.29 -9.35 charger5 e17214080b8ff312dbb5b1a006d36e43e9d81fae6c511ea562ec59f08f9b0aae 10
+    command: python3 charger_agent.py 36 52.4744 13.4544 charger5 e17214080b8ff312dbb5b1a006d36e43e9d81fae6c511ea562ec59f08f9b0aae 10
 
