@@ -6,12 +6,15 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {ChargerService} from '../charger.service';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    HttpClientModule,
     LeafletModule.forRoot(),
     RouterModule.forChild([
       {
@@ -20,6 +23,9 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  providers: [
+    ChargerService,
+  ]
 })
 export class HomePageModule {}
