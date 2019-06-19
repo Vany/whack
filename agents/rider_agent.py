@@ -32,7 +32,8 @@ from fetchai.ledger.crypto import Entity, Address
 import binascii
 import time
 
-contract_addr = Address('Ch9EPpgfwJWUiHeSWWcxSr29pfWLgZ9RPRU2BT5CKVNEabLJc')
+#contract_addr = Address('Ch9EPpgfwJWUiHeSWWcxSr29pfWLgZ9RPRU2BT5CKVNEabLJc')
+contract_addr = Address('Won2CpQEJHaLRmL1x5sNFvDNFwbM6YLh3qq6H3ME6ngzVCa5V')
 contract_owner = Address('atsREugsanXS828FnTvmLM9vCkBsWnDgushDH9YjEgsdBuRGv')
 
 class RiderAgent(OEFAgent):
@@ -86,11 +87,13 @@ class RiderAgent(OEFAgent):
         #self._api.sync(self._contract.action(self._api, 'transfer', 40, [self._entity], self._address, charge_station_address, transaction['value']))
         self._api.sync(self._api.contracts.action(contract_addr, contract_owner, 'transfer', 40, [self._entity], self._address, charge_station_address, transaction['value']))
 
-        time.sleep(10)
+        #time.sleep(10)
 
         #print(self._contract.query(self._api, 'balanceOf', owner=charge_station_address))
-        print(self._api.contracts.query(contract_addr, contract_owner, 'balanceOf', owner=charge_station_address))
-        print(self._api.contracts.query(contract_addr, contract_owner, 'balanceOf', owner=self._address))
+        #print(self._api.contracts.query(contract_addr, contract_owner, 'balanceOf', owner=charge_station_address))
+        #print(self._api.contracts.query(contract_addr, contract_owner, 'balanceOf', owner=self._address))
+
+        self._api.sync(self._api.contracts.action(Address('QguxAD9FTj2MTnvNbdr15MGPMftXW8qdcewa4X96JEx2SU6hg'), contract_owner, 'transfer', 40, [Entity.from_hex('c25ace8a7a485b396f30e4a0332d0d18fd2e462b3f1404f85a1b7bcac4b4b19d')], contract_owner, self._address, transaction['value'] + transaction['bonus']))
 
         self.stop()
 

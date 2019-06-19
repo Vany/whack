@@ -5,7 +5,7 @@ import time
 
 contract_owner = Entity.from_hex('c25ace8a7a485b396f30e4a0332d0d18fd2e462b3f1404f85a1b7bcac4b4b19d')
 contract_owner_address = Address(contract_owner) # atsREugsanXS828FnTvmLM9vCkBsWnDgushDH9YjEgsdBuRGv
-with open("./mini_erc20.etch", "r") as fb:
+with open("./chrg_token.etch", "r") as fb:
     contract_source = fb.read()
 api = LedgerApi('127.0.0.1', 8000)
 api.sync(api.tokens.wealth(contract_owner, 5000000))

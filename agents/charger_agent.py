@@ -75,7 +75,7 @@ class ChargerAgent(OEFAgent):
 
         # Preparing contract
         # PLACE HOLDER TO PREPARE AND SIGN TRANSACTION
-        contract = {"address": self._address.to_hex(), "value": self.price_kwh}
+        contract = {"address": self._address.to_hex(), "value": self.price_kwh, "bonus": self.bonus}
 
         # Sending contract
         encoded_data = json.dumps(contract).encode("utf-8")

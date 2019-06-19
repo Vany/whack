@@ -1,0 +1,45 @@
+@init
+function createSupply(owner: Address)
+  var ttal : UInt64 = 1000000000u64;
+  var balance_state = State<UInt64>(owner);
+  var supply_state = State<UInt64>('total_supply');
+  balance_state.set(ttal);
+  supply_state.set(ttal);
+endfunction
+
+@query
+function name() : String
+  return "Charging bonus";
+endfunction
+
+@query
+function symbol() : String
+  return "CBNS";
+endfunction
+
+@query
+function totalSupply() : UInt64
+  var supply_state = State<UInt64>('total_supply');
+  return supply_state.get(0u64);
+endfunction
+
+@query
+function balanceOf(owner: Address) : UInt64
+    var owner_state = State<UInt64>(owner);
+    return owner_state.get(0u64);
+endfunction
+
+@action
+function transfer(from: Address, to: Address, amount: UInt64) : Bool
+  if(!from.signedTx())
+    return false;
+  endif
+  var from_account = State<UInt64>(from);
+  var to_account = State<UInt64>(to);
+  if (from_account.get(0u64) >= amount)
+    from_account.set(from_account.get(0u64) - amount);
+    to_account.set(to_account.get(0u64) + amount);
+    return true;
+  endif
+  return false;
+endfunction
